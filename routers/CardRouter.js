@@ -1,8 +1,9 @@
 const cardRouter = require('express').Router();
 
+const checkJwt = require('../middleware/checkJwt');
 const card = require('../models/card-model');
 
-cardRouter.get('/', async (req, res) => {
+cardRouter.get('/', checkJwt, async (req, res) => {
   const [cards] = await card.findAllCard(req.query);
   res.json(cards);
 });

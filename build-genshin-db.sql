@@ -6,7 +6,6 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `pseudo` VARCHAR(30) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
     `avatar` VARCHAR(255),
     `password` VARCHAR(255) NOT NULL
 );
@@ -34,7 +33,7 @@ CREATE TABLE `card_deck` (
     FOREIGN KEY (card_id) REFERENCES card(id)
 );
 
-INSERT INTO `user` (`pseudo`, `email`, `password`) VALUES ('toto', 'toto@gmail.com', 'totopass'), ('tata', 'tata@gmail.com', 'tatapass'), ('titi', 'titi@gmail.com', 'titipass');
+INSERT INTO `user` (`pseudo`, `password`) VALUES ('toto', 'totopass'), ('tata', 'tatapass'), ('titi', 'titipass');
 
 INSERT INTO `deck` (`namedeck`, `user_id`) VALUES ('decknumero1', 1), ('decknumero2', 2), ('decknumero3', 1);
 
