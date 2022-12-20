@@ -6,7 +6,7 @@ const findAllDeck = () => db.query('SELECT namedeck FROM deck');
 
 const findAllDeckForOneUser = (id) =>
   db.query(
-    'SELECT namedeck FROM deck INNER JOIN user ON user.id=deck.user_id WHERE user.id=?',
+    'SELECT deck.id, namedeck FROM deck INNER JOIN user ON user.id=deck.user_id WHERE user.id=?',
     [id]
   );
 

@@ -42,13 +42,13 @@ userRouter.post('/createuser', async (req, res) => {
   const jwtkey = generateJwt(value.pseudo);
 
   return res.json({
-    credentiel: jwtkey,
+    credential: jwtkey,
   });
 });
 
 userRouter.post('/login', async (req, res) => {
   const { value, error } = userSchema.validate(req.body);
-  console.log(value, error);
+  //console.log(value, error);
 
   if (error) {
     // on return l'erreur sil y en a une
@@ -59,7 +59,7 @@ userRouter.post('/login', async (req, res) => {
 
   if (!existedUser) {
     return res.status(403).json({
-      message: "pseudo n'existe pas",
+      message: 'pseudo ou mot de passe incorrect',
     });
   }
 
@@ -67,7 +67,7 @@ userRouter.post('/login', async (req, res) => {
 
   if (!verified) {
     return res.status(403).json({
-      message: 'pseudo ou mdp incorrect',
+      message: 'pseudo ou mot de passe incorrect',
     });
   }
 
@@ -76,7 +76,8 @@ userRouter.post('/login', async (req, res) => {
   //console.log(existedUser)
 
   res.json({
-    credentiel: jwtkey,
+    credential: jwtkey,
+    id: existedUser.id,
   });
 });
 

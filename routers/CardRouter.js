@@ -3,10 +3,14 @@ const cardRouter = require('express').Router();
 const checkJwt = require('../middleware/checkJwt');
 const card = require('../models/card-model');
 
+// cardRouter.get('/', async (req, res) => {
+//   const [cards] = await card.findAllCard(req.query);
+//   res.json(cards);
+// });
 cardRouter.get('/', checkJwt, async (req, res) => {
   const [cards] = await card.findAllCard(req.query);
   res.json(cards);
-});
+});    // avec check authorization
 
 cardRouter.get('/:id', async (req, res) => {
   const [[oneCard]] = await card.findOneCardById(req.params.id);
@@ -18,7 +22,8 @@ cardRouter.get('/:id', async (req, res) => {
 });
 
 cardRouter.post('/addcardindeck/:deckid', async (req, res) => {
-  await card.addCardInTheDeck(req.body, req.params.deckid);
+  const cardId = Number(req.params.deckid)
+  await card.addCardInTheDeck(req.body, cardId);
   return res.status(201).json('la carte a ete ajouter au deck');
 });
 
