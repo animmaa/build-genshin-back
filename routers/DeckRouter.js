@@ -7,6 +7,16 @@ deckRouter.get('/', async (req, res) => {
   res.json(decks);
 });
 
+deckRouter.get('/number/:deck_id/:card_id', async (req, res) => {
+
+  const {deck_id, card_id} = req.params
+  const id_deck = +deck_id
+  const id_card = +card_id
+  
+  const [[number]] = await deck.findNumberCardInTheDeck(id_card, id_deck);
+  res.json(number)
+})
+
 deckRouter.get('/:id', async (req, res) => {
   const [deckByUser] = await deck.findAllDeckForOneUser(req.params.id);
   if (deckByUser) {
@@ -24,6 +34,24 @@ deckRouter.get('/cardlist/:id', async (req, res) => {
     res.status(404).json();
   }
 });
+
+deckRouter.get('/totalpersonnage/:id', async (req, res) => {
+  const [[nomberPersonnage]] = await deck.findPersonnageNumberCardInTheDeck(req.params.id)
+  if (nomberPersonnage) {
+    res.json(nomberPersonnage);
+  } else {
+    res.status(404).json();
+  }
+})
+
+deckRouter.get('/totalcard/:id', async (req, res) => {
+  const [[numberTotal]] = await deck.findTotalNumberCardInTheDeck(req.params.id)
+  if (numberTotal) {
+    res.json(numberTotal);
+  } else {
+    res.status(404).json();
+  }
+})
 
 deckRouter.post('/deckadd/:id', async (req, res) => {
   await deck.createDeck(req.body, req.params.id);

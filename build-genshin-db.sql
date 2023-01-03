@@ -20,8 +20,9 @@ CREATE TABLE `deck` (
 CREATE TABLE `card` (
     `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
-    `element` VARCHAR(255) NOT NULL,
-    `imagecard` VARCHAR(255)
+    `element` VARCHAR(255),
+    `url` VARCHAR(255) NOT NULL,
+    `type` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `card_deck` (
@@ -33,11 +34,11 @@ CREATE TABLE `card_deck` (
     FOREIGN KEY (card_id) REFERENCES card(id)
 );
 
-INSERT INTO `user` (`pseudo`, `password`) VALUES ('toto', 'totopass'), ('tata', 'tatapass'), ('titi', 'titipass');
+-- INSERT INTO `user` (`pseudo`, `password`) VALUES ('toto', 'totopass'), ('tata', 'tatapass'), ('titi', 'titipass');
 
-INSERT INTO `deck` (`namedeck`, `user_id`) VALUES ('decknumero1', 1), ('decknumero2', 2), ('decknumero3', 1);
+-- INSERT INTO `deck` (`namedeck`, `user_id`) VALUES ('decknumero1', 1), ('decknumero2', 2), ('decknumero3', 1);
 
-INSERT INTO `card` (`name`, `element`) VALUES ('keqing', 'electro'), ('diluc', 'pyro'), ('mona', 'hydro'), ('shenhe', 'cryo'), ('kazuha', 'anemo');
+-- INSERT INTO `card` (`name`, `element`) VALUES ('keqing', 'electro'), ('diluc', 'pyro'), ('mona', 'hydro'), ('shenhe', 'cryo'), ('kazuha', 'anemo');
 
-INSERT INTO `card_deck` (`deck_id`, `card_id`) VALUES (1, 1), (1, 2), (1, 3), (2, 1), (2, 4), (2, 5);
+-- INSERT INTO `card_deck` (`deck_id`, `card_id`) VALUES (1, 1), (1, 2), (1, 3), (2, 1), (2, 4), (2, 5);
 

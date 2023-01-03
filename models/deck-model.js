@@ -12,8 +12,26 @@ const findAllDeckForOneUser = (id) =>
 
 const findAllCardForOneDeck = (id) =>
   db.query(
-    'SELECT name, element FROM card JOIN card_deck ON card_deck.card_id=card.id WHERE deck_id=?',
+    'SELECT name, element, url, type FROM card JOIN card_deck ON card_deck.card_id=card.id WHERE deck_id=?',
     [id]
+  );
+
+const findNumberCardInTheDeck = (deck_id, card_id) =>
+  db.query(
+    'SELECT COUNT(card_id) AS numberCard FROM card_deck WHERE deck_id=? AND card_id=?',
+    [deck_id, card_id]
+  );
+
+const findTotalNumberCardInTheDeck = (deck_id) =>
+  db.query(
+    'SELECT COUNT(card_id) AS numberCard FROM card_deck WHERE deck_id=?',
+    [deck_id]
+  );
+
+const findPersonnageNumberCardInTheDeck = (deck_id) =>
+  db.query(
+    'SELECT COUNT(*) AS numberPersonnageCard FROM card_deck JOIN card ON card.id=card_deck.card_id WHERE deck_id=? and type="personnage"',
+    [deck_id]
   );
 
 const createDeck = ({ namedeck }, id) =>
@@ -31,6 +49,9 @@ module.exports = {
   findAllDeck,
   findAllDeckForOneUser,
   findAllCardForOneDeck,
+  findNumberCardInTheDeck,
+  findTotalNumberCardInTheDeck,
+  findPersonnageNumberCardInTheDeck,
   createDeck,
   updateNameDeck,
   deleteDeck,
