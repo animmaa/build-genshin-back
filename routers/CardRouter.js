@@ -5,40 +5,68 @@ const card = require('../models/card-model');
 
 cardRouter.get('/', checkJwt, async (req, res) => {
   const [cards] = await card.findAllCard(req.query);
-  res.json(cards);
+  try {
+    res.json(cards);
+  } catch (error) {
+    res.json(error);
+  }
 }); // avec check authorization
 
 cardRouter.get('/equipement', checkJwt, async (req, res) => {
   const [cards] = await card.findAllCardEquipement(req.query);
-  res.json(cards);
+  try {
+    res.json(cards);
+  } catch (error) {
+    res.json(error);
+  }
 });
 cardRouter.get('/event', checkJwt, async (req, res) => {
   const [cards] = await card.findAllCardEvent(req.query);
-  res.json(cards);
+  try {
+    res.json(cards);
+  } catch (error) {
+    res.json(error);
+  }
 });
 cardRouter.get('/personnage', checkJwt, async (req, res) => {
   const [cards] = await card.findAllCardPersonnage(req.query);
-  res.json(cards);
+  try {
+    res.json(cards);
+  } catch (error) {
+    res.json(error);
+  }
 });
 cardRouter.get('/support', checkJwt, async (req, res) => {
   const [cards] = await card.findAllCardSupport(req.query);
-  res.json(cards);
+  try {
+    res.json(cards);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
 cardRouter.get('/:id', async (req, res) => {
   const [[oneCard]] = await card.findOneCardById(req.params.id);
-  if (oneCard) {
-    res.json(oneCard);
-  } else {
-    res.status(404).json();
+  try {
+    if (oneCard) {
+      res.json(oneCard);
+    } else {
+      res.status(404).json();
+    }
+  } catch (error) {
+    res.json(error);
   }
 });
 
 cardRouter.post('/addcardindeck/:deckid/:cardid', async (req, res) => {
   const cardId = Number(req.params.cardid);
   const deckId = Number(req.params.deckid);
-  await card.addCardInTheDeck(cardId, deckId);
-  return res.status(201).json('la carte a ete ajouter au deck');
+  try {
+    await card.addCardInTheDeck(cardId, deckId);
+    return res.status(201).json('la carte a ete ajouter au deck');
+  } catch (error) {
+    return res.json(error);
+  }
 });
 
 cardRouter.delete('/deletecardindeck/:deck_id/:card_id', async (req, res) => {
@@ -48,7 +76,7 @@ cardRouter.delete('/deletecardindeck/:deck_id/:card_id', async (req, res) => {
     await card.deleteCardInTheDeck(cardId, deckId);
     return res.status(201).json(`deck ${deckId}`);
   } catch (error) {
-    return console.log(error);
+    return res.json(error);
   }
 });
 

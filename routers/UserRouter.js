@@ -12,7 +12,11 @@ const user = require('../models/user-model');
 
 userRouter.get('/', async (req, res) => {
   const [users] = await user.findAllUser(req.query);
-  res.json(users);
+  try {
+    res.json(users);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
 userRouter.post('/createuser', async (req, res) => {
