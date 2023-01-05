@@ -10,22 +10,26 @@ const userSchema = Joy.object({
 
 const user = require('../models/user-model');
 
-// const { body, validationResult } = require('express-validator');
-
 userRouter.get('/', async (req, res) => {
   const [users] = await user.findAllUser(req.query);
-  res.json(users);
+  try {
+    res.json(users);
+  } catch (error) {
+    res.json(error);
+  }
 });
 
 userRouter.post('/createuser', async (req, res) => {
-  const { value, error } = userSchema.validate(req.body); // cree valeur du req body dans value et error si il y a un probleme
+  const { value, error } = userSchema.validate(req.body);
+  // cree valeur du req body dans value et error si il y a un probleme
 
   if (error) {
     // on return l'erreur sil y en a une
     return res.status(400).json(error);
   }
 
-  const [[existingUser]] = await user.findUserByPseudo(value.pseudo); // on cree une requete get pour voir si le nom est deja present
+  const [[existingUser]] = await user.findUserByPseudo(value.pseudo);
+  // on cree une requete get pour voir si le nom est deja present
 
   if (existingUser) {
     // si le nom est deja enregistré on lui return quil existe deja
@@ -34,10 +38,12 @@ userRouter.post('/createuser', async (req, res) => {
     });
   }
 
-  const hashPassword = await argon2.hash(value.password); // si le nom n'existe pas on hash son password
+  const hashPassword = await argon2.hash(value.password);
+  // si le nom n'existe pas on hash son password
 
-  //console.log(value.pseudo)
-  await user.createUser(value.pseudo, hashPassword); // on insert dans la base de donnée les valeur et le pass hashé
+  // console.log(value.pseudo)
+  await user.createUser(value.pseudo, hashPassword);
+  // on insert dans la base de donnée les valeur et le pass hashé
 
   const jwtkey = generateJwt(value.pseudo);
 
@@ -48,7 +54,7 @@ userRouter.post('/createuser', async (req, res) => {
 
 userRouter.post('/login', async (req, res) => {
   const { value, error } = userSchema.validate(req.body);
-  //console.log(value, error);
+  // console.log(value, error);
 
   if (error) {
     // on return l'erreur sil y en a une
@@ -73,9 +79,9 @@ userRouter.post('/login', async (req, res) => {
 
   const jwtkey = generateJwt(value.pseudo);
 
-  //console.log(existedUser)
+  // console.log(existedUser)
 
-  res.json({
+  return res.json({
     credential: jwtkey,
     id: existedUser.id,
   });
