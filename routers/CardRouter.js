@@ -3,7 +3,7 @@ const cardRouter = require('express').Router();
 const checkJwt = require('../middleware/checkJwt');
 const card = require('../models/card-model');
 
-cardRouter.get('/', checkJwt, async (req, res) => {
+cardRouter.get('/', async (req, res) => {
   const [cards] = await card.findAllCard(req.query);
   try {
     res.json(cards);
@@ -12,7 +12,7 @@ cardRouter.get('/', checkJwt, async (req, res) => {
   }
 }); // avec check authorization
 
-cardRouter.get('/equipement', checkJwt, async (req, res) => {
+cardRouter.get('/equipement', async (req, res) => {
   const [cards] = await card.findAllCardEquipement(req.query);
   try {
     res.json(cards);
@@ -20,7 +20,7 @@ cardRouter.get('/equipement', checkJwt, async (req, res) => {
     res.json(error);
   }
 });
-cardRouter.get('/event', checkJwt, async (req, res) => {
+cardRouter.get('/event', async (req, res) => {
   const [cards] = await card.findAllCardEvent(req.query);
   try {
     res.json(cards);
@@ -28,7 +28,7 @@ cardRouter.get('/event', checkJwt, async (req, res) => {
     res.json(error);
   }
 });
-cardRouter.get('/personnage', checkJwt, async (req, res) => {
+cardRouter.get('/personnage', async (req, res) => {
   const [cards] = await card.findAllCardPersonnage(req.query);
   try {
     res.json(cards);
@@ -36,7 +36,7 @@ cardRouter.get('/personnage', checkJwt, async (req, res) => {
     res.json(error);
   }
 });
-cardRouter.get('/support', checkJwt, async (req, res) => {
+cardRouter.get('/support', async (req, res) => {
   const [cards] = await card.findAllCardSupport(req.query);
   try {
     res.json(cards);
