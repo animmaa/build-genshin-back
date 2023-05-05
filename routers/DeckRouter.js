@@ -11,6 +11,15 @@ deckRouter.get('/', async (req, res) => {
   }
 });
 
+deckRouter.get('/fulldeck', async (req, res) => {
+  const [fulldeck] = await deck.findFullDeck(req.body);
+  try {
+    res.json(fulldeck);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 deckRouter.get('/number/:deck_id/:card_id', async (req, res) => {
   const deckId = Number(req.params.deck_id);
   const cardId = Number(req.params.card_id);
@@ -51,7 +60,7 @@ deckRouter.get('/cardlist/:id', async (req, res) => {
 
 deckRouter.get('/totalpersonnage/:id', async (req, res) => {
   const [[nomberPersonnage]] = await deck.findPersonnageNumberCardInTheDeck(
-    req.params.id,
+    req.params.id
   );
   try {
     if (nomberPersonnage) {
@@ -66,7 +75,7 @@ deckRouter.get('/totalpersonnage/:id', async (req, res) => {
 
 deckRouter.get('/totalcard/:id', async (req, res) => {
   const [[numberTotal]] = await deck.findTotalNumberCardInTheDeck(
-    req.params.id,
+    req.params.id
   );
   try {
     if (numberTotal) {
@@ -80,7 +89,15 @@ deckRouter.get('/totalcard/:id', async (req, res) => {
 });
 
 deckRouter.post('/deckadd/:id', async (req, res) => {
-  await deck.createDeck(req.body, req.params.id);
+  const image = 'https://s3.us-east-1.amazonaws.com/gamewith-en/article_tools/genshin-impact/gacha/card_i_85.png'
+  const initialImage = {
+    namedeck: req.body.namedeck,
+    imgdeckone: image,
+    imgdecktwo: image,
+    imgdeckthree: image,
+  };
+
+  await deck.createDeck(initialImage, req.params.id);
   try {
     return res.status(201).json();
   } catch (error) {
@@ -97,8 +114,8 @@ deckRouter.put('/namedeckupdate/:id', async (req, res) => {
   }
 });
 
-deckRouter.delete('/deckdelete', async (req, res) => {
-  await deck.deleteDeck(req.body);
+deckRouter.delete('/deckdelete/:id', async (req, res) => {
+  await deck.deleteDeck(req.params);
   try {
     return res
       .status(204)
