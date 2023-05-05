@@ -89,7 +89,8 @@ deckRouter.get('/totalcard/:id', async (req, res) => {
 });
 
 deckRouter.post('/deckadd/:id', async (req, res) => {
-  const image = 'https://s3.us-east-1.amazonaws.com/gamewith-en/article_tools/genshin-impact/gacha/card_i_85.png'
+  const image =
+    'https://s3.us-east-1.amazonaws.com/gamewith-en/article_tools/genshin-impact/gacha/card_i_85.png';
   const initialImage = {
     namedeck: req.body.namedeck,
     imgdeckone: image,
@@ -105,12 +106,17 @@ deckRouter.post('/deckadd/:id', async (req, res) => {
   }
 });
 
-deckRouter.put('/namedeckupdate/:id', async (req, res) => {
+deckRouter.put('/updatedeck/:id', async (req, res) => {
   await deck.updateNameDeck(req.body, req.params.id);
-  try {
-    return res.status(204).json('le nom du deck a bien ete modifié');
-  } catch (error) {
-    return res.json(error);
+  const [decks] = await deck.findAllDeck(req.query);
+  if (decks.some((e) => e.id == req.params.id)) {
+    try {
+      return res.status(204).json('deck modifié');
+    } catch (error) {
+      return res.json(error);
+    }
+  } else {
+    return res.status(404).json('Le deck est introuvable');
   }
 });
 
