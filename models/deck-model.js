@@ -45,8 +45,17 @@ const createDeck = ({ namedeck, imgdeckone, imgdecktwo, imgdeckthree }, id) =>
     [namedeck, imgdeckone, imgdecktwo, imgdeckthree, id]
   );
 
-const updateNameDeck = ({ namedeck }, id) =>
-  db.query('UPDATE deck SET namedeck=? WHERE id=?', [namedeck, id]);
+// const updateNameDeck = ({ namedeck }, id) =>
+//   db.query('UPDATE deck SET namedeck=? WHERE id=?', [namedeck, id]);
+
+const updateNameDeck = (
+  { namedeck, imgdeckone, imgdecktwo, imgdeckthree },
+  id
+) =>
+  db.query(
+    'UPDATE deck SET namedeck=?, imgdeckone=?, imgdecktwo=?, imgdeckthree=? WHERE id=?',
+    [namedeck, imgdeckone, imgdecktwo, imgdeckthree, id]
+  );
 
 const deleteDeck = ({ id }) => db.query('DELETE FROM deck WHERE id=?', [id]);
 
