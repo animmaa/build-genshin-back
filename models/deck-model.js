@@ -10,6 +10,8 @@ const findAllDeckForOneUser = (id) =>
     [id]
   );
 
+const findAllInfosForOneDeck = (id) => db.query('SELECT * FROM deck WHERE id=?', [id])
+
 const findAllCardForOneDeck = (id) =>
   db.query(
     'SELECT name, element, url, type FROM card JOIN card_deck ON card_deck.card_id=card.id WHERE deck_id=? ORDER BY FIELD(type, "personnage", "equipement", "support", "event")',
@@ -45,8 +47,6 @@ const createDeck = ({ namedeck, imgdeckone, imgdecktwo, imgdeckthree }, id) =>
     [namedeck, imgdeckone, imgdecktwo, imgdeckthree, id]
   );
 
-// const updateNameDeck = ({ namedeck }, id) =>
-//   db.query('UPDATE deck SET namedeck=? WHERE id=?', [namedeck, id]);
 
 const updateNameDeck = (
   { namedeck, imgdeckone, imgdecktwo, imgdeckthree },
@@ -62,6 +62,7 @@ const deleteDeck = ({ id }) => db.query('DELETE FROM deck WHERE id=?', [id]);
 module.exports = {
   findAllDeck,
   findAllDeckForOneUser,
+  findAllInfosForOneDeck,
   findAllCardForOneDeck,
   findFullDeck,
   findNumberCardInTheDeck,
