@@ -10,7 +10,11 @@ const findAllDeckForOneUser = (id) =>
     [id]
   );
 
-const findAllInfosForOneDeck = (id) => db.query('SELECT * FROM deck WHERE id=?', [id])
+const findAllInfosForOneDeck = (id) =>
+  db.query(
+    'SELECT namedeck, imgdeckone, imgdecktwo, imgdeckthree FROM deck WHERE id=?',
+    [id]
+  );
 
 const findAllCardForOneDeck = (id) =>
   db.query(
