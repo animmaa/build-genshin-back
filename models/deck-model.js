@@ -52,7 +52,7 @@ const createDeck = ({ namedeck, imgdeckone, imgdecktwo, imgdeckthree }, id) =>
   );
 
 
-const updateNameDeck = (
+const updateImageAndNameDeck = (
   { namedeck, imgdeckone, imgdecktwo, imgdeckthree },
   id
 ) =>
@@ -73,6 +73,6 @@ module.exports = {
   findTotalNumberCardInTheDeck,
   findPersonnageNumberCardInTheDeck,
   createDeck,
-  updateNameDeck,
+  updateImageAndNameDeck,
   deleteDeck,
 };
