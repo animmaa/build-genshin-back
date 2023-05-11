@@ -45,6 +45,19 @@ deckRouter.get('/:id', async (req, res) => {
   }
 });
 
+deckRouter.get('/infosdeck/:id', async (req, res) => {
+  const [[infosdeck]] = await deck.findAllInfosForOneDeck(req.params.id);
+  try {
+    if (infosdeck) {
+      res.json(infosdeck);
+    } else {
+      res.status(404).json();
+    }
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 deckRouter.get('/cardlist/:id', async (req, res) => {
   const [listCardDeck] = await deck.findAllCardForOneDeck(req.params.id);
   try {
