@@ -1,4 +1,4 @@
-const deckModel = require('../models/deck-model')
+const deckModel = require('../models/deck-model');
 
 const deckController = {
   getAllDeck: async (req, res) => {
@@ -71,9 +71,8 @@ const deckController = {
   },
 
   getPersonnageNumberCardInTheDeck: async (req, res) => {
-    const [[nomberPersonnage]] = await deckModel.findPersonnageNumberCardInTheDeck(
-      req.params.id
-    );
+    const [[nomberPersonnage]] =
+      await deckModel.findPersonnageNumberCardInTheDeck(req.params.id);
     try {
       if (nomberPersonnage) {
         res.json(nomberPersonnage);
@@ -144,5 +143,4 @@ const deckController = {
   },
 };
 
-
-module.exports = deckController
+module.exports = deckController;

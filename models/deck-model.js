@@ -40,6 +40,18 @@ const findPersonnageNumberCardInTheDeck = (deckId) =>
     [deckId]
   );
 
+const findAllNumberCardInTheDeckWithoutCharacter = (deckId) =>
+  db.query(
+    'SELECT COUNT(*) AS numberCard FROM card_deck JOIN card ON card.id=card_deck.card_id WHERE deck_id=? and type!="personnage"',
+    [deckId]
+  );
+
+const findAllIdenticalCardInTheDeck = (deckId) =>
+  db.query(
+    'SELECT card_id, count(card_id) as nb_card_identical FROM card_deck WHERE deck_id=? GROUP BY card_id',
+    [deckId]
+  );
+
 const findFullDeck = () =>
   db.query(
     'SELECT DISTINCT deck_id, COUNT(deck_id) AS fulldeck, namedeck FROM card_deck JOIN deck ON deck.id=card_deck.deck_id GROUP BY deck_id HAVING fulldeck = 30'
@@ -50,7 +62,6 @@ const createDeck = ({ namedeck, imgdeckone, imgdecktwo, imgdeckthree }, id) =>
     'INSERT INTO deck (namedeck, imgdeckone, imgdecktwo, imgdeckthree, user_id) VALUES (?, ?, ?, ?, ?)',
     [namedeck, imgdeckone, imgdecktwo, imgdeckthree, id]
   );
-
 
 const updateImageAndNameDeck = (
   { namedeck, imgdeckone, imgdecktwo, imgdeckthree },
@@ -71,6 +82,8 @@ module.exports = {
   findFullDeck,
   findNumberCardInTheDeck,
   findTotalNumberCardInTheDeck,
+  findAllNumberCardInTheDeckWithoutCharacter,
+  findAllIdenticalCardInTheDeck,
   findPersonnageNumberCardInTheDeck,
   createDeck,
   updateImageAndNameDeck,
