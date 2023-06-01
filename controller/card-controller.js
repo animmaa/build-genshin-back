@@ -69,16 +69,30 @@ const cardController = {
     const [arrayCard] = await deckModel.findAllIdenticalCardInTheDeck(deckId);
 
     const [cards] = await cardModel.findAllCardPersonnage();
+    const [[numberPerso]] = await deckModel.findPersonnageNumberCardInTheDeck(
+      deckId
+    );
 
-    console.log('liste carte presente', arrayCard);
     if (cards.some((el) => el.id === cardId)) {
+      if (numberPerso.numberPersonnageCard >= 3) {
+        return res
+          .status(409)
+          .json('il y a déjà 3 cartes personnages dans ce deck');
+      }
       for (const iterator of arrayCard) {
         if (iterator.card_id === cardId) {
           return res.status(409).json('la carte personnage est déjà présente');
         }
       }
     }
+    const [[numberCardWithoutCharacter]] =
+      await deckModel.findAllNumberCardInTheDeckWithoutCharacter(deckId);
+    
+      console.log(numberCardWithoutCharacter);
 
+    if (numberCardWithoutCharacter.numberCard >= 27) {
+      return res.status(409).json('il y a déjà 27 cartes actions dans ce deck');
+    }
     for (const element of arrayCard) {
       if (element.nb_card_identical >= 3 && element.card_id === cardId) {
         console.log(element);

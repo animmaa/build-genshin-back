@@ -40,6 +40,12 @@ const findPersonnageNumberCardInTheDeck = (deckId) =>
     [deckId]
   );
 
+const findAllNumberCardInTheDeckWithoutCharacter = (deckId) =>
+  db.query(
+    'SELECT COUNT(*) AS numberCard FROM card_deck JOIN card ON card.id=card_deck.card_id WHERE deck_id=? and type!="personnage"',
+    [deckId]
+  );
+
 const findAllIdenticalCardInTheDeck = (deckId) =>
   db.query(
     'SELECT card_id, count(card_id) as nb_card_identical FROM card_deck WHERE deck_id=? GROUP BY card_id',
@@ -76,6 +82,7 @@ module.exports = {
   findFullDeck,
   findNumberCardInTheDeck,
   findTotalNumberCardInTheDeck,
+  findAllNumberCardInTheDeckWithoutCharacter,
   findAllIdenticalCardInTheDeck,
   findPersonnageNumberCardInTheDeck,
   createDeck,
