@@ -87,10 +87,10 @@ const cardController = {
       const [[numberCardWithoutCharacter]] =
         await deckModel.findAllNumberCardInTheDeckWithoutCharacter(deckId);
 
-      if (numberCardWithoutCharacter.numberCard >= 27) {
+      if (numberCardWithoutCharacter.numberCard >= 30) {
         return res
           .status(409)
-          .json('il y a déjà 27 cartes actions dans ce deck');
+          .json('il y a déjà 30 cartes actions dans ce deck');
       }
       for (const element of arrayCard) {
         if (element.nb_card_identical >= 3 && element.card_id === cardId) {

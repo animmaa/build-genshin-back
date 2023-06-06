@@ -15,7 +15,7 @@ deckRouter.get(
   '/totalpersonnage/:id',
   deckController.getPersonnageNumberCardInTheDeck
 );
-deckRouter.get('/totalcard/:id', deckController.getTotalNumberCardInTheDeck);
+deckRouter.get('/totalcard/:id', deckController.getTotalNumberCardActionInTheDeck);
 deckRouter.post('/deckadd/:id', deckController.postCreateDeck);
 deckRouter.put('/updatedeck/:id', deckController.putUpdateImageAndNameDeck);
 deckRouter.delete('/deckdelete/:id', deckController.deleteOneDeck);

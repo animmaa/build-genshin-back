@@ -84,8 +84,8 @@ const deckController = {
     }
   },
 
-  getTotalNumberCardInTheDeck: async (req, res) => {
-    const [[numberTotal]] = await deckModel.findTotalNumberCardInTheDeck(
+  getTotalNumberCardActionInTheDeck: async (req, res) => {
+    const [[numberTotal]] = await deckModel.findTotalNumberCardActionInTheDeck(
       req.params.id
     );
     try {
