@@ -30,7 +30,7 @@ const findNumberCardInTheDeck = (deckId, cardId) =>
 
 const findTotalNumberCardActionInTheDeck = (deckId) =>
   db.query(
-    'SELECT COUNT(card_id) AS numberCard FROM card_deck JOIN card ON card.id=card_deck.card_id WHERE deck_id=1 AND type!="personnage"',
+    'SELECT COUNT(card_id) AS numberCard FROM card_deck JOIN card ON card.id=card_deck.card_id WHERE deck_id=? AND type!="personnage"',
     [deckId]
   );
 
