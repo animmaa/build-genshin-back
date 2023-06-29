@@ -15,9 +15,17 @@ deckRouter.get(
   '/totalpersonnage/:id',
   deckController.getPersonnageNumberCardInTheDeck
 );
-deckRouter.get('/totalcard/:id', deckController.getTotalNumberCardActionInTheDeck);
+deckRouter.get(
+  '/totalcard/:id',
+  deckController.getTotalNumberCardActionInTheDeck
+);
+deckRouter.get(
+  '/totalcardinthedeck/:id',
+  deckController.getTotalCardInTheDeck
+);
 deckRouter.post('/deckadd/:id', deckController.postCreateDeck);
 deckRouter.put('/updatedeck/:id', deckController.putUpdateImageAndNameDeck);
+deckRouter.patch('/publish/:id', deckController.putPublishDeck);
 deckRouter.delete('/deckdelete/:id', deckController.deleteOneDeck);
 
 module.exports = deckRouter;
