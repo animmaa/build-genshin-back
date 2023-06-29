@@ -16,6 +16,7 @@ CREATE TABLE `deck` (
     `imgdeckone` VARCHAR(255) NOT NULL,
     `imgdecktwo` VARCHAR(255) NOT NULL,
     `imgdeckthree` VARCHAR(255) NOT NULL,
+    `publish` BOOLEAN NOT NULL DEFAULT 0,
     `user_id` INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES user(id)
 );

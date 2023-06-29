@@ -85,7 +85,21 @@ const deckController = {
   },
 
   getTotalNumberCardActionInTheDeck: async (req, res) => {
-    const [[numberTotal]] = await deckModel.findTotalNumberCardActionInTheDeck(
+    const [[numberAction]] =
+      await deckModel.findAllNumberCardInTheDeckWithoutCharacter(req.params.id);
+    try {
+      if (numberAction) {
+        res.json(numberAction);
+      } else {
+        res.status(404).json();
+      }
+    } catch (error) {
+      res.json(error);
+    }
+  },
+
+  getTotalCardInTheDeck: async (req, res) => {
+    const [[numberTotal]] = await deckModel.findTotalNumberCardInTheDeck(
       req.params.id
     );
     try {
@@ -125,6 +139,30 @@ const deckController = {
         return res.status(204).json('deck modifié');
       } catch (error) {
         return res.json(error);
+      }
+    } else {
+      return res.status(404).json('Le deck est introuvable');
+    }
+  },
+
+  putPublishDeck: async (req, res) => {
+    const [decks] = await deckModel.findAllDeck(req.query);
+    if (decks.some((e) => e.id == req.params.id)) {
+      const [[{ publish }]] = await deckModel.statusPublish(req.params.id);
+      if (publish === 0) {
+        try {
+          await deckModel.updatePublishDeckTrue(req.params.id);
+          return res.status(200).json({message: 'Le deck à été publié'});
+        } catch (error) {
+          return res.json(error);
+        }
+      } else {
+        try {
+          await deckModel.updatePublishDeckFalse(req.params.id);
+          return res.status(200).json({message: 'Le deck à été retiré'});
+        } catch (error) {
+          return res.json(error);
+        }
       }
     } else {
       return res.status(404).json('Le deck est introuvable');
