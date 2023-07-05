@@ -61,7 +61,7 @@ const userController = {
     const jwtkey = generateJwt(value.pseudo);
 
     return res.json({
-      credential: jwtkey,
+      message: 'Le compte à bien été créé 👌',
     });
   },
 
