@@ -4,6 +4,12 @@ const userModel = require('../models/user-model');
 const { generateJwt } = require('../utils/auth');
 
 const userSchema = Joy.object({
+  email: Joy.string().min(3).required().email(),
+  pseudo: Joy.string().min(3).max(30).required(),
+  password: Joy.string().required(),
+});
+
+const userSchemaLogin = Joy.object({
   pseudo: Joy.string().min(3).max(30).required(),
   password: Joy.string().required(),
 });
@@ -24,10 +30,11 @@ const userController = {
 
     if (error) {
       // on return l'erreur sil y en a une
+      console.log(error)
       return res.status(400).json(error);
     }
 
-    const [[existingUser]] = await userModel.findUserByPseudo(value.pseudo);
+    const [[existingUser]] = await userModel.findUserByEmail(value.email);
     // on cree une requete get pour voir si le nom est deja present
 
     if (existingUser) {
@@ -36,12 +43,19 @@ const userController = {
         message: "l'utilisateur existe deja",
       });
     }
+    const [[existingPseudo]] = await userModel.findUserByPseudo(value.pseudo)
+
+    if (existingPseudo) {
+      return res.status(409).json({
+        message: "Ce pseudo est déjà utilisé",
+      });
+    }
 
     const hashPassword = await argon2.hash(value.password);
     // si le nom n'existe pas on hash son password
 
     // console.log(value.pseudo)
-    await userModel.createUser(value.pseudo, hashPassword);
+    await userModel.createUser(value.email, value.pseudo, hashPassword);
     // on insert dans la base de donnée les valeur et le pass hashé
 
     const jwtkey = generateJwt(value.pseudo);
@@ -52,7 +66,7 @@ const userController = {
   },
 
   login: async (req, res) => {
-    const { value, error } = userSchema.validate(req.body);
+    const { value, error } = userSchemaLogin.validate(req.body);
     // console.log(value, error);
 
     if (error) {
