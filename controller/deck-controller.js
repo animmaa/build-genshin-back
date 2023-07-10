@@ -152,14 +152,14 @@ const deckController = {
       if (publish === 0) {
         try {
           await deckModel.updatePublishDeckTrue(req.params.id);
-          return res.status(200).json({message: 'Le deck à été publié'});
+          return res.status(200).json({ message: 'Le deck à été publié' });
         } catch (error) {
           return res.json(error);
         }
       } else {
         try {
           await deckModel.updatePublishDeckFalse(req.params.id);
-          return res.status(200).json({message: 'Le deck à été retiré'});
+          return res.status(200).json({ message: 'Le deck à été retiré' });
         } catch (error) {
           return res.json(error);
         }
