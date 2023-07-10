@@ -9,7 +9,7 @@ const statusPublish = (id) =>
 
 const findAllDeckForOneUser = (id) =>
   db.query(
-    'SELECT deck.id, namedeck, imgdeckone, imgdecktwo, imgdeckthree FROM deck INNER JOIN user ON user.id=deck.user_id WHERE user.id=? ORDER BY deck.id desc',
+    'SELECT deck.id, namedeck, imgdeckone, imgdecktwo, imgdeckthree, publish FROM deck INNER JOIN user ON user.id=deck.user_id WHERE user.id=? ORDER BY deck.id desc',
     [id]
   );
 
