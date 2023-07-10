@@ -20,8 +20,8 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/api/card', cardRouter);
-app.use('/api/deck', deckRouter);
 app.use('/api/user', userRouter);
+app.use('/api/deck', deckRouter);
 
 app.listen(port, () => {
   console.log(`Server run on ${port}`);
