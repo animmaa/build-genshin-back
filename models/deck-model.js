@@ -57,7 +57,7 @@ const findAllIdenticalCardInTheDeck = (deckId) =>
 
 const findFullDeck = () =>
   db.query(
-    'SELECT DISTINCT deck_id, COUNT(deck_id) AS fulldeck, namedeck FROM card_deck JOIN deck ON deck.id=card_deck.deck_id WHERE publish=1 GROUP BY deck_id HAVING fulldeck = 33'
+    'SELECT DISTINCT deck_id, COUNT(deck_id) AS fulldeck, namedeck, imgdeckone, imgdecktwo, imgdeckthree FROM card_deck JOIN deck ON deck.id=card_deck.deck_id WHERE publish=1 GROUP BY deck_id HAVING fulldeck = 33'
   );
 
 const createDeck = ({ namedeck, imgdeckone, imgdecktwo, imgdeckthree }, id) =>
